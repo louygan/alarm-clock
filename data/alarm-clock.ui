@@ -275,6 +275,7 @@
                 <child>
                   <object class="GtkSpinButton" id="hour-spin">
                     <property name="activates_default">True</property>
+                    <property name="can_default">True</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -295,6 +296,7 @@
                 <child>
                   <object class="GtkSpinButton" id="minute-spin">
                     <property name="activates_default">True</property>
+                    <property name="can_default">True</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -315,6 +317,7 @@
                 <child>
                   <object class="GtkSpinButton" id="second-spin">
                     <property name="activates_default">True</property>
+                    <property name="can_default">True</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>

@@ -875,9 +875,10 @@ alarm_settings_dialog_new (AlarmApplet *applet)
 	
 	// GENERAL SETTINGS
 	dialog->label_entry = GTK_WIDGET (gtk_builder_get_object (builder, "label-entry"));
-	gtk_widget_grab_focus (dialog->label_entry);
 	
 	dialog->hour_spin = GTK_WIDGET (gtk_builder_get_object (builder, "hour-spin"));
+	gtk_widget_grab_focus (dialog->hour_spin);
+
 	dialog->min_spin = GTK_WIDGET (gtk_builder_get_object (builder, "minute-spin"));
 	dialog->sec_spin = GTK_WIDGET (gtk_builder_get_object (builder, "second-spin"));
 	
@@ -916,5 +917,7 @@ alarm_settings_dialog_show (AlarmSettingsDialog *dialog, Alarm *alarm)
 	alarm_settings_dialog_set_alarm (dialog, alarm);
 
 	gtk_widget_show_all (dialog->dialog);
+	gtk_widget_grab_focus (dialog->hour_spin);
 	gtk_window_present (GTK_WINDOW (dialog->dialog));
+	gtk_widget_grab_focus (dialog->hour_spin);
 }
