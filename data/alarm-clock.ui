@@ -274,6 +274,7 @@
                 <property name="spacing">3</property>
                 <child>
                   <object class="GtkSpinButton" id="hour-spin">
+                    <property name="activates_default">True</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -293,6 +294,7 @@
                 </child>
                 <child>
                   <object class="GtkSpinButton" id="minute-spin">
+                    <property name="activates_default">True</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -312,6 +314,7 @@
                 </child>
                 <child>
                   <object class="GtkSpinButton" id="second-spin">
+                    <property name="activates_default">True</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -668,6 +671,7 @@
                             </child>
                             <child>
                               <object class="GtkEntry" id="app-command-entry">
+                                <property name="activates_default">True</property>
                                 <property name="visible">True</property>
                                 <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
@@ -711,7 +715,9 @@
                 <property name="label">gtk-close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
+                <property name="can_default">True</property>
+                <property name="has_default">True</property>
+                <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>

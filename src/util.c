@@ -26,6 +26,7 @@
 #include <glib.h>
 #include <glib-object.h>
 #include "util.h"
+#include <stdio.h>
 
 /**
  * Calculates the alarm timestamp given hour, min and secs.
@@ -132,8 +133,9 @@ alarm_applet_get_data_path (const char *name)
 
 #ifdef ALARM_CLOCK_RUN_IN_SOURCE_TREE
     /* Try the file in the source tree first */
-    filename = g_build_filename ("..", "data", name, NULL);
+    filename = g_build_filename ("./", "data", name, NULL);
     g_debug("filename: %s", filename);
+    printf("filename: %s", filename);
     if (g_file_test (filename, G_FILE_TEST_EXISTS) == FALSE)
     {
         g_free (filename);
@@ -147,6 +149,7 @@ alarm_applet_get_data_path (const char *name)
         }
     }
 #else
+    printf("%s", ALARM_CLOCK_PKGDATADIR);
     filename = g_build_filename (ALARM_CLOCK_PKGDATADIR, name, NULL);
 #endif
 

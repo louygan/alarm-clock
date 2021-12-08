@@ -821,7 +821,7 @@ alarm_settings_dialog_response (GtkDialog *dialog,
 								gpointer data)
 {
     AlarmApplet *applet = (AlarmApplet *)data;
-	AlarmSettingsDialog *settings_dialog = applet->settings_dialog;
+    AlarmSettingsDialog *settings_dialog = applet->settings_dialog;
     
     g_debug ("alarm_settings_dialog_response %d", rid);
 
@@ -843,7 +843,7 @@ alarm_settings_dialog_set_alarm (AlarmSettingsDialog *dialog, Alarm *alarm)
     dialog->alarm = alarm;
     
     // Populate widgets
-	alarm_settings_update (dialog);
+    alarm_settings_update (dialog);
 
     // Notify of change to alarm
     g_signal_connect (alarm, "notify", G_CALLBACK (alarm_changed), dialog);
@@ -860,7 +860,7 @@ alarm_settings_dialog_new (AlarmApplet *applet)
 	AlarmRepeat r;
 	gint i;
 
-    GtkBuilder *builder = applet->ui;
+	GtkBuilder *builder = applet->ui;
 	
 	// Initialize struct
 	dialog = g_new0 (AlarmSettingsDialog, 1);
@@ -903,7 +903,7 @@ alarm_settings_dialog_new (AlarmApplet *applet)
 	dialog->notify_app_command_box   = GTK_WIDGET (gtk_builder_get_object (builder, "app-command-box"));
 	dialog->notify_app_command_entry = GTK_WIDGET (gtk_builder_get_object (builder, "app-command-entry"));
 	
-	
+
 	// Load apps list
 	alarm_applet_apps_load (applet);
 	
@@ -913,8 +913,8 @@ alarm_settings_dialog_new (AlarmApplet *applet)
 void
 alarm_settings_dialog_show (AlarmSettingsDialog *dialog, Alarm *alarm)
 {
-    alarm_settings_dialog_set_alarm (dialog, alarm);
+	alarm_settings_dialog_set_alarm (dialog, alarm);
 
-    gtk_widget_show_all (dialog->dialog);
+	gtk_widget_show_all (dialog->dialog);
 	gtk_window_present (GTK_WINDOW (dialog->dialog));
 }

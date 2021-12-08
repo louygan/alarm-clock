@@ -265,8 +265,8 @@ alarm_applet_ui_init (AlarmApplet *applet)
         g_critical ("Could not intialize libnotify!");
     }
 
-	/* Initialize alarm list window */
-	applet->list_window = alarm_list_window_new (applet);
+    /* Initialize alarm list window */
+    applet->list_window = alarm_list_window_new (applet);
 
     /* Initialize alarm settings dialog */
     applet->settings_dialog = alarm_settings_dialog_new (applet);
@@ -281,8 +281,8 @@ alarm_applet_ui_init (AlarmApplet *applet)
     prefs_init (applet);
 
     /* Set up UI updater */
-	alarm_applet_ui_update (applet);
-	g_timeout_add_seconds (1, (GSourceFunc)alarm_applet_ui_update, applet);
+    alarm_applet_ui_update (applet);
+    g_timeout_add_seconds (1, (GSourceFunc)alarm_applet_ui_update, applet);
 }
 
 /*
