@@ -513,7 +513,8 @@ alarm_applet_alarm_triggered (Alarm *alarm, gpointer data)
     summary = g_strdup_printf ("%s", alarm->message);
     body = g_strdup_printf (_("You can snooze or stop alarms from the Alarm Clock menu."));
     icon = (alarm->type == ALARM_TYPE_TIMER) ? TIMER_ICON : ALARM_ICON;
-    alarm_applet_notification_show (applet, summary, body, icon);
+    // dont' show notification 20211218
+    //alarm_applet_notification_show (applet, summary, body, icon);
     
     g_free (summary);
     g_free (body);
