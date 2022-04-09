@@ -18,6 +18,9 @@ DIR=$PWD
 
 cd $(script_path)
 
+
+# ./config.h:5:#define ALARM_CLOCK_RUN_IN_SOURCE_TREE 1
+
 # use Dockerfile in ./
 # other Dockerfile maybe found in docker directory
 docker build docker  -t alarm-clock:build
