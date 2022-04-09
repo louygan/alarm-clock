@@ -75,7 +75,10 @@ void
 display_edit_alarm_dialog (AlarmApplet *applet, Alarm *alarm);
 
 void
-alarm_settings_dialog_close (AlarmSettingsDialog *dialog);
+alarm_settings_dialog_close (AlarmSettingsDialog *dialog); 
+
+void
+alarm_settings_dialog_close_rid (AlarmSettingsDialog *dialog, gint rid); //20220401
 
 gboolean
 alarm_settings_output_time (GtkSpinButton *spin, gpointer data);

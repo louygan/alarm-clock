@@ -802,13 +802,22 @@ alarm_settings_dialog_clear (AlarmSettingsDialog *dialog)
 void
 alarm_settings_dialog_close (AlarmSettingsDialog *dialog)
 {
+    alarm_settings_dialog_close_rid (dialog, 0);
+}
+
+void
+alarm_settings_dialog_close_rid (AlarmSettingsDialog *dialog, gint rid)
+// add rid parameter 20220401
+{
 //	g_hash_table_remove (dialog->applet->edit_alarm_dialogs, dialog->alarm->id);
 	
 //	gtk_widget_destroy (GTK_WIDGET (dialog->dialog))
 	
 
     /* Enable the alarm when closing the dialog */
-    alarm_enable (dialog->alarm);
+    if ( rid == 0 ) { //20220401 only change alarm when "close" buuton clicked
+        alarm_enable (dialog->alarm);
+    }
 
     alarm_settings_dialog_clear (dialog);
 
@@ -823,9 +832,9 @@ alarm_settings_dialog_response (GtkDialog *dialog,
     AlarmApplet *applet = (AlarmApplet *)data;
     AlarmSettingsDialog *settings_dialog = applet->settings_dialog;
     
-    g_debug ("alarm_settings_dialog_response %d", rid);
+    g_debug ("alarm_settings_dialog_response %d", rid); // add rid 20220401, also update alarm-clock.ui
 
-    alarm_settings_dialog_close (settings_dialog);
+    alarm_settings_dialog_close_rid (settings_dialog, rid);
 }
 
 /*
