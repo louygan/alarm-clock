@@ -279,7 +279,7 @@ alarm_class_init (AlarmClass *class)
 	/* install properties */
 	g_object_class_install_property (g_object_class, PROP_DIR, dir_param);
 	g_object_class_install_property (g_object_class, PROP_ID, id_param);
-    g_object_class_install_property (g_object_class, PROP_TRIGGERED, triggered_param);
+	g_object_class_install_property (g_object_class, PROP_TRIGGERED, triggered_param);
 	g_object_class_install_property (g_object_class, PROP_TYPE, type_param);
 	g_object_class_install_property (g_object_class, PROP_TIME, time_param);
 	g_object_class_install_property (g_object_class, PROP_TIMESTAMP, timestamp_param);
@@ -295,7 +295,7 @@ alarm_class_init (AlarmClass *class)
 	
 	/* set signal handlers */
 	class->alarm = alarm_alarm;
-    class->cleared = alarm_cleared;
+	class->cleared = alarm_cleared;
 	class->error = alarm_error;
 	class->player_changed = alarm_player_changed;
 

@@ -35,7 +35,8 @@ struct _AlarmSettingsDialog {
 	
 	AlarmApplet *applet;
 	Alarm *alarm;
-	
+        guint hour, min, sec;
+
 	/* Media player for previews */
 	MediaPlayer *player;
 	

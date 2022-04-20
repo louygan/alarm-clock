@@ -406,7 +406,7 @@ void
 alarm_applet_alarms_load (AlarmApplet *applet)
 {
 	GList *list = NULL;
-    GList *l = NULL;
+	GList *l = NULL;
     
 	if (applet->alarms != NULL) {
 		// Free old alarm objects
@@ -419,7 +419,7 @@ alarm_applet_alarms_load (AlarmApplet *applet)
 	}
 
 	// Fetch list of alarms and add them
-    applet->alarms = NULL;
+	applet->alarms = NULL;
 	list = alarm_get_list (ALARM_GCONF_DIR);
 
     for (l = list; l != NULL; l = l->next) {
@@ -432,7 +432,7 @@ alarm_applet_alarms_add (AlarmApplet *applet, Alarm *alarm)
 {
 	applet->alarms = g_list_append (applet->alarms, alarm);
 
-    g_signal_connect (alarm, "notify", G_CALLBACK (alarm_applet_alarm_changed), applet);
+	g_signal_connect (alarm, "notify", G_CALLBACK (alarm_applet_alarm_changed), applet);
 	g_signal_connect (alarm, "notify::sound-file", G_CALLBACK (alarm_sound_file_changed), applet);
 
 	g_signal_connect (alarm, "alarm", G_CALLBACK (alarm_applet_alarm_triggered), applet);

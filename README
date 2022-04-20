@@ -37,6 +37,10 @@ cd alarm-clock-applet-<VERSION>
 
 Compile with the usual:
 
-./configure
-make
-make install
+  ./configure
+  make
+  make install
+
+
+Enable debug:
+  G_MESSAGES_DEBUG=all ./alarm-clock-applet

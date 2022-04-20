@@ -139,7 +139,7 @@ alarm_settings_update_time (AlarmSettingsDialog *dialog)
 		return;
 	}
 
-    g_debug ("AlarmSettingsDialog: update_time() to %d:%d:%d", tm->tm_hour, tm->tm_min, tm->tm_sec);
+	g_debug ("AlarmSettingsDialog: update_time() to %d:%d:%d", tm->tm_hour, tm->tm_min, tm->tm_sec);
 	
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->hour_spin), tm->tm_hour);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->min_spin), tm->tm_min);
@@ -154,7 +154,7 @@ alarm_settings_update_repeat (AlarmSettingsDialog *dialog)
 	gboolean check;
 	gchar *label, *rep;
 
-    g_debug ("AlarmSettingsDialog: update_repeat()");
+	g_debug ("AlarmSettingsDialog: update_repeat()");
 	
 	/*
 	 * Update check boxes
@@ -489,7 +489,7 @@ alarm_settings_changed_label (GtkEditable *editable,
                               gpointer     data)
 {
     AlarmApplet *applet = (AlarmApplet *)data;
-	AlarmSettingsDialog *dialog = applet->settings_dialog;
+    AlarmSettingsDialog *dialog = applet->settings_dialog;
     const gchar *text;
 
     g_assert (dialog->alarm != NULL);
@@ -505,10 +505,11 @@ void
 alarm_settings_changed_time (GtkSpinButton *spinbutton, gpointer data)
 {
     AlarmApplet *applet = (AlarmApplet *)data;
-	AlarmSettingsDialog *dialog = applet->settings_dialog;
-	guint hour, min, sec;
-	struct tm *tm;
+    AlarmSettingsDialog *dialog = applet->settings_dialog;
+    guint hour, min, sec;
+    struct tm *tm;
 
+    //20220419 don't change time
     g_assert (dialog->alarm != NULL);
     
     tm = alarm_get_time(dialog->alarm);
@@ -525,7 +526,11 @@ alarm_settings_changed_time (GtkSpinButton *spinbutton, gpointer data)
     	sec = gtk_spin_button_get_value (GTK_SPIN_BUTTON (dialog->sec_spin));
     }
 
-	alarm_set_time (dialog->alarm, hour, min, sec);
+    //20220419 don't change time
+    //alarm_set_time (dialog->alarm, hour, min, sec);
+    dialog->hour = hour;
+    dialog->min = min;
+    dialog->sec = sec;
 }
 
 /**
@@ -815,8 +820,9 @@ alarm_settings_dialog_close_rid (AlarmSettingsDialog *dialog, gint rid)
 	
 
     /* Enable the alarm when closing the dialog */
-    if ( rid == 0 ) { //20220401 only change alarm when "close" buuton clicked
+    if ( rid == 10 ) { //20220401 only change alarm when "close" buuton clicked
         alarm_enable (dialog->alarm);
+        alarm_set_time (dialog->alarm, dialog->hour, dialog->min, dialog->sec);
     }
 
     alarm_settings_dialog_clear (dialog);
