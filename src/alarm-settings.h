@@ -1,8 +1,8 @@
 /*
  * alarm-settings.h -- Alarm settings dialog
- * 
+ *
  * Copyright (C) 2007-2008 Johannes H. Jensen <joh@pseudoberries.com>
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  * Authors:
  * 		Johannes H. Jensen <joh@pseudoberries.com>
  */
@@ -32,37 +32,37 @@ typedef struct _AlarmSettingsDialog AlarmSettingsDialog;
 #include "alarm-applet.h"
 
 struct _AlarmSettingsDialog {
-	
-	AlarmApplet *applet;
-	Alarm *alarm;
-        guint hour, min, sec;
 
-	/* Media player for previews */
-	MediaPlayer *player;
-	
-	GtkWidget *dialog;
-	GtkWidget *clock_toggle, *timer_toggle;
-	GtkWidget *label_entry;
-	GtkWidget *hour_spin, *min_spin, *sec_spin;
-	
-	/* Repeat */
-	GtkWidget *repeat_expand;
-	GtkWidget *repeat_label;
-	GtkWidget *repeat_check[7];		/* Mon, tue, ..., sun check boxes */
-	
-	/* Notification */
-	GtkWidget *notify_sound_radio;
-	GtkWidget *notify_sound_box;
-	GtkWidget *notify_sound_stock;
-	GtkWidget *notify_sound_combo;
-	GtkWidget *notify_sound_loop_check;
-	GtkWidget *notify_sound_preview;
-	
-	GtkWidget *notify_app_radio;
-	GtkWidget *notify_app_box;
-	GtkWidget *notify_app_combo;
-	GtkWidget *notify_app_command_box;
-	GtkWidget *notify_app_command_entry;
+    AlarmApplet *applet;
+    Alarm *alarm;
+    guint hour, min, sec;
+
+    /* Media player for previews */
+    MediaPlayer *player;
+
+    GtkWidget *dialog;
+    GtkWidget *clock_toggle, *timer_toggle;
+    GtkWidget *label_entry;
+    GtkWidget *hour_spin, *min_spin, *sec_spin;
+
+    /* Repeat */
+    GtkWidget *repeat_expand;
+    GtkWidget *repeat_label;
+    GtkWidget *repeat_check[7];		/* Mon, tue, ..., sun check boxes */
+
+    /* Notification */
+    GtkWidget *notify_sound_radio;
+    GtkWidget *notify_sound_box;
+    GtkWidget *notify_sound_stock;
+    GtkWidget *notify_sound_combo;
+    GtkWidget *notify_sound_loop_check;
+    GtkWidget *notify_sound_preview;
+
+    GtkWidget *notify_app_radio;
+    GtkWidget *notify_app_box;
+    GtkWidget *notify_app_combo;
+    GtkWidget *notify_app_command_box;
+    GtkWidget *notify_app_command_entry;
 
 };
 
@@ -76,7 +76,7 @@ void
 display_edit_alarm_dialog (AlarmApplet *applet, Alarm *alarm);
 
 void
-alarm_settings_dialog_close (AlarmSettingsDialog *dialog); 
+alarm_settings_dialog_close (AlarmSettingsDialog *dialog);
 
 void
 alarm_settings_dialog_close_rid (AlarmSettingsDialog *dialog, gint rid); //20220401

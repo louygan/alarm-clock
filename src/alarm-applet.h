@@ -67,14 +67,14 @@ void alarm_applet_clear_alarms (AlarmApplet *applet);
 #define ALARM_STD_SNOOZE 9
 
 typedef enum {
-	LABEL_TYPE_INVALID = 0,
-	LABEL_TYPE_TIME,
-	LABEL_TYPE_REMAIN,
+    LABEL_TYPE_INVALID = 0,
+    LABEL_TYPE_TIME,
+    LABEL_TYPE_REMAIN,
 } LabelType;
 
 struct _AlarmApplet {
-	/* Unique app */
-	UniqueApp *unique_app;
+    /* Unique app */
+    UniqueApp *unique_app;
 
     /* User Interface */
     GtkBuilder *ui;
@@ -83,36 +83,36 @@ struct _AlarmApplet {
     /* App Indicator */
     AppIndicator *app_indicator;
 #else
-	/* Status Icon */
-	GtkStatusIcon *status_icon;
+    /* Status Icon */
+    GtkStatusIcon *status_icon;
 #endif
 
-	/* Status menu */
+    /* Status menu */
     GtkWidget *status_menu;
-    
-	/* Alarms */
-	GList	*alarms;
+
+    /* Alarms */
+    GList	*alarms;
     guint   n_triggered;        // Number of triggered alarms
 
-	/* Sounds & apps list */
-	GList *sounds;
-	GList *apps;
+    /* Sounds & apps list */
+    GList *sounds;
+    GList *apps;
 
-	/* List-alarms UI */
-	AlarmListWindow *list_window;
+    /* List-alarms UI */
+    AlarmListWindow *list_window;
 
     /* Alarm settings dialog */
     AlarmSettingsDialog *settings_dialog;
-    
-	/* Preferences */
-	GtkDialog *prefs_dialog;
-	GtkWidget *prefs_autostart_check;
-    
+
+    /* Preferences */
+    GtkDialog *prefs_dialog;
+    GtkWidget *prefs_autostart_check;
+
     guint snooze_mins;
 
     // Actions on one alarm
     GtkActionGroup *actions_alarm;
-    
+
     GtkAction *action_edit;
     GtkAction *action_delete;
     GtkToggleAction *action_enabled;

@@ -59,20 +59,20 @@ G_BEGIN_DECLS
  */
 
 typedef enum {
-	ALARM_TYPE_INVALID = 0,
-	ALARM_TYPE_CLOCK,		/* Alarm at specific time */
-	ALARM_TYPE_TIMER		/* Alarm in X mins */
+    ALARM_TYPE_INVALID = 0,
+    ALARM_TYPE_CLOCK,		/* Alarm at specific time */
+    ALARM_TYPE_TIMER		/* Alarm in X mins */
 } AlarmType;
 
 typedef enum {
-	ALARM_REPEAT_NONE = 0,
-	ALARM_REPEAT_SUN  = 1 << 0,
-	ALARM_REPEAT_MON  = 1 << 1,
-	ALARM_REPEAT_TUE  = 1 << 2,
-	ALARM_REPEAT_WED  = 1 << 3,
-	ALARM_REPEAT_THU  = 1 << 4,
-	ALARM_REPEAT_FRI  = 1 << 5,
-	ALARM_REPEAT_SAT  = 1 << 6,
+    ALARM_REPEAT_NONE = 0,
+    ALARM_REPEAT_SUN  = 1 << 0,
+    ALARM_REPEAT_MON  = 1 << 1,
+    ALARM_REPEAT_TUE  = 1 << 2,
+    ALARM_REPEAT_WED  = 1 << 3,
+    ALARM_REPEAT_THU  = 1 << 4,
+    ALARM_REPEAT_FRI  = 1 << 5,
+    ALARM_REPEAT_SAT  = 1 << 6,
 } AlarmRepeat;
 
 #define ALARM_REPEAT_WEEKDAYS	(ALARM_REPEAT_MON | ALARM_REPEAT_TUE | ALARM_REPEAT_WED | ALARM_REPEAT_THU | ALARM_REPEAT_FRI)
@@ -80,44 +80,44 @@ typedef enum {
 #define ALARM_REPEAT_ALL		(ALARM_REPEAT_WEEKDAYS | ALARM_REPEAT_WEEKENDS)
 
 typedef enum {
-	ALARM_NOTIFY_INVALID = 0,
-	ALARM_NOTIFY_SOUND,		/* Notification by sound */
-	ALARM_NOTIFY_COMMAND,	/* Notification by command */
+    ALARM_NOTIFY_INVALID = 0,
+    ALARM_NOTIFY_SOUND,		/* Notification by sound */
+    ALARM_NOTIFY_COMMAND,	/* Notification by command */
 } AlarmNotifyType;
 
 typedef struct _Alarm Alarm;
 typedef struct _AlarmClass AlarmClass;
 
 struct _Alarm {
-	GObject parent;
+    GObject parent;
 
-	gchar *gconf_dir;		/* GConf directory */
-	gint id;				/* Alarm ID */
+    gchar *gconf_dir;		/* GConf directory */
+    gint id;				/* Alarm ID */
 
     gboolean triggered;     // Whether the alarm has been triggered
 
-	/* GConf mapped values */
-	AlarmType type;
-	time_t time;			/* Time for alarm */
-	time_t timestamp;		/* UNIX timestamp (local time) for running alarms */
-	gboolean active;
-	gchar *message;
-	AlarmRepeat repeat;
+    /* GConf mapped values */
+    AlarmType type;
+    time_t time;			/* Time for alarm */
+    time_t timestamp;		/* UNIX timestamp (local time) for running alarms */
+    gboolean active;
+    gchar *message;
+    AlarmRepeat repeat;
 
-	AlarmNotifyType notify_type;
-	gchar *sound_file;
-	gboolean sound_loop;
-	gchar *command;
+    AlarmNotifyType notify_type;
+    gchar *sound_file;
+    gboolean sound_loop;
+    gchar *command;
 };
 
 struct _AlarmClass {
-	GObjectClass parent;
+    GObjectClass parent;
 
-	/* Signals */
-	void (*alarm)(Alarm *alarm);				// Alarm triggered!
+    /* Signals */
+    void (*alarm)(Alarm *alarm);				// Alarm triggered!
     void (*cleared)(Alarm *alarm);              // Alarm cleared
-	void (*error)(Alarm *alarm, GError *err);	// An error occured
-	void (*player_changed)(Alarm *alarm, MediaPlayerState state);		/* Media player state changed */
+    void (*error)(Alarm *alarm, GError *err);	// An error occured
+    void (*player_changed)(Alarm *alarm, MediaPlayerState state);		/* Media player state changed */
 };
 
 /*
@@ -126,9 +126,9 @@ struct _AlarmClass {
 #define ALARM_ERROR		alarm_error_quark ()
 
 typedef enum {
-	ALARM_ERROR_NONE,
-	ALARM_ERROR_PLAY,		/* Error playing sound */
-	ALARM_ERROR_COMMAND		/* Error launching command */
+    ALARM_ERROR_NONE,
+    ALARM_ERROR_PLAY,		/* Error playing sound */
+    ALARM_ERROR_COMMAND		/* Error launching command */
 } AlarmErrorCode;
 
 
@@ -205,9 +205,9 @@ alarm_get_list (const gchar *gconf_dir);
 
 void
 alarm_signal_connect_list (GList *instances,
-						   const gchar *detailed_signal,
-						   GCallback c_handler,
-						   gpointer data);
+                           const gchar *detailed_signal,
+                           GCallback c_handler,
+                           gpointer data);
 
 void
 alarm_trigger (Alarm *alarm);

@@ -1,8 +1,8 @@
 /*
  * player.h - Simple media player based on GStreamer
- * 
+ *
  * Copyright (C) 2007-2008 Johannes H. Jensen <joh@pseudoberries.com>
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  * Authors:
  * 		Johannes H. Jensen <joh@pseudoberries.com>
  */
@@ -29,10 +29,10 @@
 G_BEGIN_DECLS
 
 typedef enum {
-	MEDIA_PLAYER_INVALID = 0,
-	MEDIA_PLAYER_STOPPED,
-	MEDIA_PLAYER_PLAYING,
-	MEDIA_PLAYER_ERROR
+    MEDIA_PLAYER_INVALID = 0,
+    MEDIA_PLAYER_STOPPED,
+    MEDIA_PLAYER_PLAYING,
+    MEDIA_PLAYER_ERROR
 } MediaPlayerState;
 
 typedef struct _MediaPlayer MediaPlayer;
@@ -50,22 +50,22 @@ typedef void (*MediaPlayerStateChangeCallback)	(MediaPlayer *player, MediaPlayer
 typedef void (*MediaPlayerErrorHandler)			(MediaPlayer *player, GError *error, gpointer data);
 
 struct _MediaPlayer {
-	GstElement *player;
-	gboolean loop;
-	MediaPlayerState state;
-	
-	guint watch_id;
-	
-	MediaPlayerStateChangeCallback state_changed;
-	MediaPlayerErrorHandler error_handler;
-	
-	gpointer state_changed_data;
-	gpointer error_handler_data;
+    GstElement *player;
+    gboolean loop;
+    MediaPlayerState state;
+
+    guint watch_id;
+
+    MediaPlayerStateChangeCallback state_changed;
+    MediaPlayerErrorHandler error_handler;
+
+    gpointer state_changed_data;
+    gpointer error_handler_data;
 };
 
 /**
  * Create a new media player.
- * 
+ *
  * @uri				The file to play.
  * @loop			Wether to loop or not.
  * @state_callback	An optional #MediaPlayerStateChangeCallback which will be
@@ -78,8 +78,8 @@ struct _MediaPlayer {
 
 MediaPlayer *
 media_player_new (const gchar *uri, gboolean loop,
-				  MediaPlayerStateChangeCallback state_callback, gpointer data,
-				  MediaPlayerErrorHandler error_handler, gpointer error_data);
+                  MediaPlayerStateChangeCallback state_callback, gpointer data,
+                  MediaPlayerErrorHandler error_handler, gpointer error_data);
 
 /**
  * Free a media player.
@@ -95,7 +95,7 @@ media_player_set_uri (MediaPlayer *player, const gchar *uri);
 
 /**
  * Get the uri of player.
- * 
+ *
  * Free with g_free()
  */
 gchar *
