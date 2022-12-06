@@ -263,7 +263,9 @@ alarm_list_window_update_row (AlarmListWindow *list_window, GtkTreeIter *iter)
             tm = alarm_get_time (a);
             gchar tmp1[100];
             strftime(tmp1, sizeof(tmp1), TIME_COL_TIMER_FORMAT, tm);
-            sprintf(tmp, "%s(%s)", tmp, tmp1);
+            //sprintf(tmp, "%s(%s)", tmp, tmp1);
+            // 20221202 change format. 
+            sprintf(tmp, "%s     [%s]", tmp, tmp1);
         }
     }
 
