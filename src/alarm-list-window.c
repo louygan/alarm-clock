@@ -257,6 +257,14 @@ alarm_list_window_update_row (AlarmListWindow *list_window, GtkTreeIter *iter)
     } else {
         type_col = TIMER_ICON;
         strftime(tmp, sizeof(tmp), TIME_COL_TIMER_FORMAT, tm);
+
+        // 20220420 add original time
+        if (a->active) {
+            tm = alarm_get_time (a);
+            gchar tmp1[100];
+            strftime(tmp1, sizeof(tmp1), TIME_COL_TIMER_FORMAT, tm);
+            sprintf(tmp, "%s(%s)", tmp, tmp1);
+        }
     }
 
     // Create time column
