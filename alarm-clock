@@ -1,0 +1,81 @@
+#!/bin/bash
+# app_wrapper
+# = only use following commands:
+# bash  which   
+# = and following command provided in gnu coreutils
+# arch  base64  basename        cat     chcon
+# chgrp chmod   chown   chroot  cksum
+# comm  cp      csplit  cut     date
+# dd    df      dir     dircolors       dirname
+# du    echo    env     expand  expr
+# factor        false   fmt     fold    groups
+# head  hostid  hostname        id      install
+# join  kill    link    ln      logname
+# ls    md5sum  mkdir   mkfifo  mknod
+# mktemp        mv      nice    nl      nohup
+# nproc numfmt  od      paste   pathchk
+# pinky pr      printenv        printf  ptx
+# pwd   readlink        realpath        rm      rmdir
+# runcon        seq     shred   shuf    sleep
+# sort  split   stat    stdbuf  stty
+# sum   tac     tail    tee     test
+# timeout       touch   tr      true    truncate
+# tsort tty     uname   unexpand        uniq
+# unlink        uptime  users   vdir    wc
+# who   whoami  yes 
+
+# wrapper can have same name with real application,
+# make sure real applicaiton is in system path
+APP=alarm-clock-applet
+# if the wrapper has same name with APP, 
+# set SKIP_SCRIPT_PATH to 1, else 0
+SKIP_SCRIPT_PATH=0
+
+# NOTE: 
+#  alarm-clock.ui location:
+#    ubuntu93: /usr/local/share/alarm-clock-applet
+#    lugan-Virtulbox1/lugan-vm2: ~/bin/data
+
+
+# usage
+# aa=$(script_path)
+script_path()
+{
+  CURDIR=$PWD
+  SCRIPT_PATH="${BASH_SOURCE[0]}";
+  while([ -h "${SCRIPT_PATH}" ]); do
+        cd "`dirname "${SCRIPT_PATH}"`"
+        SCRIPT_PATH="$(readlink "`basename "${SCRIPT_PATH}"`")";
+  done
+  cd "`dirname "${SCRIPT_PATH}"`" > /dev/null
+  SCRIPT_PATH="`pwd`";
+  cd $CURDIR
+  echo "$SCRIPT_PATH"
+}
+
+main()
+{
+  if [ $SKIP_SCRIPT_PATH -eq 1 ]; then  
+    AA=$(script_path)
+    NEWPATH=$(echo ":$PATH:" | sed "s@:$AA:@:@g;s@^:\(.*\):\$@\1@")
+  else
+    NEWPATH=$PATH
+  fi  
+  PATH=$NEWPATH which $APP >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo $APP is not installed
+    echo " sudo cp ~/bin/$APP /usr/local/bin"  
+    echo " cp -r data ~/bin"
+    echo " cd data/icons; sudo make install"    
+    return 1 
+  fi
+
+  ps -elf | grep $APP | grep -v grep | awk '{print $4}' | xargs kill -9 2>/dev/null
+
+  APPPATH=$(which $APP | xargs dirname)
+  cd $APPPATH
+  PATH=$NEWPATH $APP "$@" 2>/dev/null &
+}
+
+main "$@"
+
