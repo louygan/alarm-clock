@@ -84,8 +84,7 @@ alarm_settings_changed_app (GtkComboBox *combo, gpointer data);
  * Utility functions for updating various parts of the settings dialog.
  */
 
-static void
-alarm_settings_update_type (AlarmSettingsDialog *dialog)
+static void alarm_settings_update_type (AlarmSettingsDialog *dialog)
 {
 
     AlarmType type = dialog->alarm->type;
@@ -126,24 +125,32 @@ alarm_settings_update_label (AlarmSettingsDialog *dialog)
     g_object_set (dialog->label_entry, "text", dialog->alarm->message, NULL);
 }
 
-static void
-alarm_settings_update_time (AlarmSettingsDialog *dialog)
+static void alarm_settings_update_time (AlarmSettingsDialog *dialog)
 {
-    struct tm *tm = alarm_get_time(dialog->alarm);
+    struct tm *tm1 = alarm_get_time(dialog->alarm);
+
+    //20230417 the tm1 is not thread safe, maybe be changed by another entry
+    //save the value to stack variable tm.
+    struct tm tm;
+    tm.tm_hour =  tm1->tm_hour;
+    tm.tm_min  =  tm1->tm_min;
+    tm.tm_sec  =  tm1->tm_sec;
+       
     gint hour = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (dialog->hour_spin));
     gint min = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (dialog->min_spin));
     gint sec = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (dialog->sec_spin));
 
-    if (tm->tm_hour == hour && tm->tm_min == min && tm->tm_sec == sec) {
+    if (tm.tm_hour == hour && tm.tm_min == min && tm.tm_sec == sec) {
         // No change
         return;
     }
 
-    g_debug ("AlarmSettingsDialog: update_time() to %d:%d:%d", tm->tm_hour, tm->tm_min, tm->tm_sec);
+    g_debug ("alarm_settings_update_time: spin_button %d:%d:%d", hour, min, sec);
+    g_debug ("alarm_settings_update_time: get_time %d:%d:%d", tm.tm_hour, tm.tm_min, tm.tm_sec);
 
-    gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->hour_spin), tm->tm_hour);
-    gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->min_spin), tm->tm_min);
-    gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->sec_spin), tm->tm_sec);
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->hour_spin), tm.tm_hour);
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->min_spin), tm.tm_min);
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->sec_spin), tm.tm_sec);
 }
 
 static void
@@ -501,8 +508,7 @@ alarm_settings_changed_label (GtkEditable *editable,
     g_object_set (dialog->alarm, "message", text, NULL);
 }
 
-void
-alarm_settings_changed_time (GtkSpinButton *spinbutton, gpointer data)
+void alarm_settings_changed_time (GtkSpinButton *spinbutton, gpointer data)
 {
     AlarmApplet *applet = (AlarmApplet *)data;
     AlarmSettingsDialog *dialog = applet->settings_dialog;
@@ -525,12 +531,21 @@ alarm_settings_changed_time (GtkSpinButton *spinbutton, gpointer data)
     } else if (GTK_WIDGET (spinbutton) == dialog->sec_spin) {
         sec = gtk_spin_button_get_value (GTK_SPIN_BUTTON (dialog->sec_spin));
     }
+    
+    //20230416 alway get all value from spins, otherwise only one spin can be 
+    //changed one time   
+    hour = gtk_spin_button_get_value (GTK_SPIN_BUTTON (dialog->hour_spin));
+    min = gtk_spin_button_get_value (GTK_SPIN_BUTTON (dialog->min_spin));
+    sec = gtk_spin_button_get_value (GTK_SPIN_BUTTON (dialog->sec_spin));
 
-    //20220419 don't change time
+    //20220419 don't change time directly to support canceling
+    //20230417 support canceling
     //alarm_set_time (dialog->alarm, hour, min, sec);
     dialog->hour = hour;
     dialog->min = min;
     dialog->sec = sec;
+
+    g_debug ("alarm_settings_changed_time update %d:%d:%d", hour, min, sec);
 }
 
 /**
@@ -821,8 +836,10 @@ alarm_settings_dialog_close_rid (AlarmSettingsDialog *dialog, gint rid)
 
     /* Enable the alarm when closing the dialog */
     if ( rid == 10 ) { //20220401 only change alarm when "close" buuton clicked
+                       
         alarm_enable (dialog->alarm);
         alarm_set_time (dialog->alarm, dialog->hour, dialog->min, dialog->sec);
+        g_debug ("rid==10 %d:%d:%d", dialog->hour, dialog->min, dialog->sec);
     }
 
     alarm_settings_dialog_clear (dialog);
@@ -848,14 +865,25 @@ alarm_settings_dialog_response (GtkDialog *dialog,
  *
  * Clears any previously associated alarms
  */
-static void
-alarm_settings_dialog_set_alarm (AlarmSettingsDialog *dialog, Alarm *alarm)
+static void alarm_settings_dialog_set_alarm (AlarmSettingsDialog *dialog, Alarm *alarm)
 {
     // Clear dialog
     alarm_settings_dialog_clear (dialog);
-
+ 
+    g_debug ("alarm_settings_dialog_set_alarm");
     // Set alarm
     dialog->alarm = alarm;
+
+    /* 20230417 
+    gchar tmp[200];
+    struct tm *tm;
+    tm = alarm_get_time (alarm);
+    strftime(tmp, sizeof(tmp), "-%H:%M", tm);
+    g_debug ("alarm_settings_dialog_set_alarm: %s", tmp);
+    tm = alarm_get_time (dialog->alarm);
+    strftime(tmp, sizeof(tmp), "-%H:%M", tm);
+    g_debug ("alarm_settings_dialog_set_alarm: %s", tmp);
+    */
 
     // Populate widgets
     alarm_settings_update (dialog);
@@ -926,8 +954,7 @@ alarm_settings_dialog_new (AlarmApplet *applet)
     return dialog;
 }
 
-void
-alarm_settings_dialog_show (AlarmSettingsDialog *dialog, Alarm *alarm)
+void alarm_settings_dialog_show (AlarmSettingsDialog *dialog, Alarm *alarm)
 {
     alarm_settings_dialog_set_alarm (dialog, alarm);
 
