@@ -1,9 +1,9 @@
 #20200123 add iperf3 to measure network bandwidth as client
 #20200110 remove qperf from apt and compile from source for ipv6 supporting
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 ENV VERSION_QPERF=0.4.11
 
-RUN apt-get update  
+RUN apt-get update 
 
 COPY . /root
 WORKDIR /root
