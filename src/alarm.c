@@ -405,11 +405,15 @@ alarm_gconf_load (Alarm *alarm)
     key = alarm_gconf_get_full_key (alarm, PROP_NAME_TIME);
     val = gconf_client_get (client, key, NULL);
     g_free (key);
+        
 
     if (val) {
         alarm->time = (time_t)gconf_value_get_int (val);
+        g_debug ("TIME value: %ld", alarm->time);
         gconf_value_free (val);
     } else {
+        g_debug ("Not found in GConf, fall back to defaults 0");
+
         // Not found in GConf, fall back to defaults
         g_object_set (alarm, PROP_NAME_TIME, ALARM_DEFAULT_TIME, NULL);
     }
@@ -1748,8 +1752,7 @@ alarm_command_run (Alarm *alarm)
 /*
  * Set time according to hour, min, sec
  */
-void
-alarm_set_time (Alarm *alarm, guint hour, guint minute, guint second)
+void alarm_set_time (Alarm *alarm, guint hour, guint minute, guint second)
 {
     g_debug ("Alarm(%p) #%d: set_time (%d:%d:%d)", alarm, alarm->id,
              hour, minute, second);
@@ -1883,10 +1886,14 @@ alarm_update_timestamp (Alarm *alarm)
 /*
  * Get the alarm time.
  */
-struct tm *
-alarm_get_time (Alarm *alarm)
+static struct tm tm1;
+struct tm * alarm_get_time (Alarm *alarm)
 {
-    return gmtime (&(alarm->time));
+    struct tm * tmm = gmtime (&(alarm->time));
+    //g_debug ("alarm_get_time: Alarm(%p) #%ld: %d:%d:%d", alarm, alarm->time,
+    //             tmm->tm_hour, tmm->tm_min, tmm->tm_sec);
+
+    return tmm;
 }
 
 static struct tm tm;
@@ -1898,8 +1905,7 @@ static struct tm tm;
  * be freed. The return value also changes for every call to alarm_get_remain,
  * so copy it if needed.
  */
-struct tm *
-alarm_get_remain (Alarm *alarm)
+struct tm * alarm_get_remain (Alarm *alarm)
 {
     time_t now;
     //struct tm tm;

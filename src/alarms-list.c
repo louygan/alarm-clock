@@ -454,6 +454,8 @@ list_alarm_selected_cb (GtkTreeView       *view,
     GtkTreeIter iter;
     GtkTreeModel *model;
     Alarm *a;
+        
+    g_debug ("list_alarm_selected_cb");
     AlarmApplet *applet = (AlarmApplet *)data;
 
     model = gtk_tree_view_get_model (view);

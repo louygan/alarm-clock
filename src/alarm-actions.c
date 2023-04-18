@@ -102,6 +102,15 @@ alarm_action_edit (GtkAction *action, gpointer data)
 
     g_debug ("AlarmAction: edit '%s'", a->message);
 
+    /* 20230417 debug time issue
+    gchar tmp[200];
+    struct tm *tm;
+    tm = alarm_get_time (a);
+    strftime(tmp, sizeof(tmp), "-%H:%M", tm);
+    g_debug ("alarm_action_edit 1: %s", tmp);   
+    g_debug ("alarm_action_edit 1: %d:%d:%d", tm->tm_hour, tm->tm_min, tm->tm_sec);
+    */
+
     // Stop alarm
     alarm_clear (a);
 

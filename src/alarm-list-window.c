@@ -225,8 +225,7 @@ alarm_list_window_contains (AlarmListWindow *list_window, Alarm *alarm)
 /**
  * Update the row in the list at the position specified by iter
  */
-static void
-alarm_list_window_update_row (AlarmListWindow *list_window, GtkTreeIter *iter)
+static void alarm_list_window_update_row (AlarmListWindow *list_window, GtkTreeIter *iter)
 {
     GtkTreeModel *model = GTK_TREE_MODEL (list_window->model);
     Alarm *a;
@@ -460,8 +459,7 @@ alarm_list_window_sort_iter_compare (GtkTreeModel *model,
 /**
  * Get the selected alarm
  */
-Alarm *
-alarm_list_window_get_selected_alarm (AlarmListWindow *list_window)
+Alarm * alarm_list_window_get_selected_alarm (AlarmListWindow *list_window)
 {
     GtkTreeModel *model;
     GtkTreeSelection *selection;
@@ -479,7 +477,11 @@ alarm_list_window_get_selected_alarm (AlarmListWindow *list_window)
         return NULL;
     }
 
-    gtk_tree_model_get (model, &iter, COLUMN_ALARM, &a, -1);
+    // Get the alarm at iter
+    gtk_tree_model_get (GTK_TREE_MODEL (model), &iter,
+                        COLUMN_ALARM, &a,
+                        -1);
+    //gtk_tree_model_get (model, &iter, COLUMN_ALARM, &a, -1);
 
     // gtk_tree_model_get () will increase the reference count
     // of the alarms each time it's called. We dereference it
@@ -489,6 +491,7 @@ alarm_list_window_get_selected_alarm (AlarmListWindow *list_window)
 
     return a;
 }
+
 
 /**
  * Set the selected alarm
