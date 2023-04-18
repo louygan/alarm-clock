@@ -664,6 +664,8 @@ alarm_applet_quit (AlarmApplet *applet)
     g_object_unref (applet->unique_app);
 }
 
+
+#define ALARM_CLOCK_APPLET_VERSION "20230418"
 /**
  * Alarm Clock main()
  */
@@ -671,6 +673,9 @@ int
 main (int argc, char *argv[])
 {
     AlarmApplet *applet;
+
+    //20230418 add version info
+    printf("\nversion: %s\n", ALARM_CLOCK_APPLET_VERSION);
 
     // Internationalization
     bindtextdomain (GETTEXT_PACKAGE, ALARM_CLOCK_DATADIR "/locale");
