@@ -23,7 +23,8 @@ cd $(script_path)
 
 # use Dockerfile in ./
 # other Dockerfile maybe found in docker directory
-docker build docker  -t alarm-clock:build
+# if dockerfile changeed, build the image manually
+#docker build docker  -t alarm-clock:build
 
 docker run -it -v$PWD:$PWD alarm-clock:build sh -c "cd $PWD; make"
 
