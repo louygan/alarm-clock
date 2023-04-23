@@ -1721,18 +1721,51 @@ alarm_player_stop (Alarm *alarm)
     }
 }
 
+// Replace the first occurrence of orig in src with new and write result to dest
+// Return a pointer to new string
+gchar *replace(const gchar *src,
+            const char *orig, const gchar *new) {
+    char *ptr = strstr(src, orig); // First match
+
+    // If no match, we want dest to contain a copy of src
+    if(!ptr) {
+        return g_strdup(src);
+    }
+
+    const ptrdiff_t offset = ptr - src; // Calculate offset
+    const int origlen = strlen(orig);
+    
+    int length =  strlen(src) + strlen(new);
+    char* dest = (char*) malloc ( length + 10 );
+    strncpy(dest, src, offset); // Copy everything before match
+    strcpy(&dest[offset], new); // Copy replacement
+    strcpy(&dest[offset + strlen(new)], &src[offset + origlen]); // Copy rest
+
+    gchar* ret = g_strdup(dest);
+    free( dest);
+
+    return ret;
+}
+
 /*
  * Run Command
  */
-static void
-alarm_command_run (Alarm *alarm)
+static void alarm_command_run (Alarm *alarm)
 {
     GError *err = NULL;
     gchar *msg;
 
-    if (!g_spawn_command_line_async (alarm->command, &err)) {
+    // 20230423 support parameter in command
+    // %N will be replace with alarm->message  : gchar* message
+    // only first %N is handled.
+    gchar* command = replace(alarm->command, "%N", alarm->message);     
+    
+    //if (!g_spawn_command_line_async (alarm->command, &err)) {
+    if (!g_spawn_command_line_async (command, &err)) {
 
-        msg = g_strdup_printf ("Could not launch `%s': %s", alarm->command, err->message);
+        // 20230423
+        //msg = g_strdup_printf ("Could not launch `%s': %s", alarm->command, err->message);
+        msg = g_strdup_printf ("Could not launch `%s': %s", command, err->message);
 
         g_critical ("%s", msg);
 
@@ -1742,6 +1775,9 @@ alarm_command_run (Alarm *alarm)
         g_free (msg);
         g_error_free (err);
     }
+    
+    // 20230423
+    g_free (command);
 }
 
 

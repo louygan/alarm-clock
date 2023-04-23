@@ -265,6 +265,9 @@ gint alarm_wday_distance (gint wday1, gint wday2);
 gboolean alarm_should_repeat (Alarm *alarm);
 gchar *alarm_repeat_to_pretty (AlarmRepeat repeat);
 
+// 20230423
+gchar *replace(const gchar *src,
+            const char *orig, const gchar *new); 
 
 G_END_DECLS
 
