@@ -665,7 +665,7 @@ alarm_applet_quit (AlarmApplet *applet)
 }
 
 
-#define ALARM_CLOCK_APPLET_VERSION "20230423"
+#define ALARM_CLOCK_APPLET_VERSION "20230424"
 
 /**
  * Alarm Clock main()

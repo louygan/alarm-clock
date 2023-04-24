@@ -261,7 +261,8 @@ static void alarm_list_window_update_row (AlarmListWindow *list_window, GtkTreeI
         if (a->active) {
             tm = alarm_get_time (a);
             gchar tmp1[100];
-            strftime(tmp1, sizeof(tmp1), TIME_COL_TIMER_FORMAT, tm);
+            // 20230424 change original time format
+            strftime(tmp1, sizeof(tmp1), TIME_COL_CLOCK_FORMAT, tm);
             //sprintf(tmp, "%s(%s)", tmp, tmp1);
             // 20221202 change format. 
             sprintf(tmp, "%s     [%s]", tmp, tmp1);
