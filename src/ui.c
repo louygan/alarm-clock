@@ -50,8 +50,12 @@ alarm_applet_ui_load (const char *name, AlarmApplet *applet)
    
     filename = alarm_applet_get_data_path (name);
 
-    g_assert(filename != NULL);
-    
+    if (filename == NULL)
+    {
+        printf(" does not exist!!!\n\n");
+        exit(1);
+    }
+  
     builder = gtk_builder_new();
     
     g_debug ("Loading UI from %s...", filename);
